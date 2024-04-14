@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            grid-gap: 10px;
+        }
+        .grid-item {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #fff; /* Default button color */
+        }
+        .selected {
+            background-color: #007bff; /* Change button color when selected */
+            color: #fff; /* Change text color when selected */
+        }
+        .buttons-container {
+            margin-top: 20px;
+        }
+        #selected-symptoms {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Disease Prediction</h1>
+    <form action="/predict" method="post">
+        <h2>Select Symptoms:</h2>
+        <button type='submit' class='grid-item' name='symptom' value='itching'>'itching'</button>
+<button type='submit' class='grid-item' name='symptom' value='skin_rash'>'skin_rash'</button>
+<button type='submit' class='grid-item' name='symptom' value='nodal_skin_eruptions'>'nodal_skin_eruptions'</button>
+<button type='submit' class='grid-item' name='symptom' value='continuous_sneezing'>'continuous_sneezing'</button>
+<button type='submit' class='grid-item' name='symptom' value='shivering'>'shivering'</button>
+<button type='submit' class='grid-item' name='symptom' value='chills'>'chills'</button>
+<button type='submit' class='grid-item' name='symptom' value='joint_pain'>'joint_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='stomach_pain'>'stomach_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='acidity'>'acidity'</button>
+<button type='submit' class='grid-item' name='symptom' value='ulcers_on_tongue'>'ulcers_on_tongue'</button>
+<button type='submit' class='grid-item' name='symptom' value='muscle_wasting'>'muscle_wasting'</button>
+<button type='submit' class='grid-item' name='symptom' value='vomiting'>'vomiting'</button>
+<button type='submit' class='grid-item' name='symptom' value='burning_micturition'>'burning_micturition'</button>
+<button type='submit' class='grid-item' name='symptom' value='spotting_ urination'>'spotting_ urination'</button>
+<button type='submit' class='grid-item' name='symptom' value='fatigue'>'fatigue'</button>
+<button type='submit' class='grid-item' name='symptom' value='weight_gain'>'weight_gain'</button>
+<button type='submit' class='grid-item' name='symptom' value='anxiety'>'anxiety'</button>
+<button type='submit' class='grid-item' name='symptom' value='cold_hands_and_feets'>'cold_hands_and_feets'</button>
+<button type='submit' class='grid-item' name='symptom' value='mood_swings'>'mood_swings'</button>
+<button type='submit' class='grid-item' name='symptom' value='weight_loss'>'weight_loss'</button>
+<button type='submit' class='grid-item' name='symptom' value='restlessness'>'restlessness'</button>
+<button type='submit' class='grid-item' name='symptom' value='lethargy'>'lethargy'</button>
+<button type='submit' class='grid-item' name='symptom' value='patches_in_throat'>'patches_in_throat'</button>
+<button type='submit' class='grid-item' name='symptom' value='irregular_sugar_level'>'irregular_sugar_level'</button>
+<button type='submit' class='grid-item' name='symptom' value='cough'>'cough'</button>
+<button type='submit' class='grid-item' name='symptom' value='high_fever'>'high_fever'</button>
+<button type='submit' class='grid-item' name='symptom' value='sunken_eyes'>'sunken_eyes'</button>
+<button type='submit' class='grid-item' name='symptom' value='breathlessness'>'breathlessness'</button>
+<button type='submit' class='grid-item' name='symptom' value='sweating'>'sweating'</button>
+<button type='submit' class='grid-item' name='symptom' value='dehydration'>'dehydration'</button>
+<button type='submit' class='grid-item' name='symptom' value='indigestion'>'indigestion'</button>
+<button type='submit' class='grid-item' name='symptom' value='headache'>'headache'</button>
+<button type='submit' class='grid-item' name='symptom' value='yellowish_skin'>'yellowish_skin'</button>
+<button type='submit' class='grid-item' name='symptom' value='dark_urine'>'dark_urine'</button>
+<button type='submit' class='grid-item' name='symptom' value='nausea'>'nausea'</button>
+<button type='submit' class='grid-item' name='symptom' value='loss_of_appetite'>'loss_of_appetite'</button>
+<button type='submit' class='grid-item' name='symptom' value='pain_behind_the_eyes'>'pain_behind_the_eyes'</button>
+<button type='submit' class='grid-item' name='symptom' value='back_pain'>'back_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='constipation'>'constipation'</button>
+<button type='submit' class='grid-item' name='symptom' value='abdominal_pain'>'abdominal_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='diarrhoea'>'diarrhoea'</button>
+<button type='submit' class='grid-item' name='symptom' value='mild_fever'>'mild_fever'</button>
+<button type='submit' class='grid-item' name='symptom' value='yellow_urine'>'yellow_urine'</button>
+<button type='submit' class='grid-item' name='symptom' value='yellowing_of_eyes'>'yellowing_of_eyes'</button>
+<button type='submit' class='grid-item' name='symptom' value='acute_liver_failure'>'acute_liver_failure'</button>
+<button type='submit' class='grid-item' name='symptom' value='fluid_overload'>'fluid_overload'</button>
+<button type='submit' class='grid-item' name='symptom' value='swelling_of_stomach'>'swelling_of_stomach'</button>
+<button type='submit' class='grid-item' name='symptom' value='swelled_lymph_nodes'>'swelled_lymph_nodes'</button>
+<button type='submit' class='grid-item' name='symptom' value='malaise'>'malaise'</button>
+<button type='submit' class='grid-item' name='symptom' value='blurred_and_distorted_vision'>'blurred_and_distorted_vision'</button>
+<button type='submit' class='grid-item' name='symptom' value='phlegm'>'phlegm'</button>
+<button type='submit' class='grid-item' name='symptom' value='throat_irritation'>'throat_irritation'</button>
+<button type='submit' class='grid-item' name='symptom' value='redness_of_eyes'>'redness_of_eyes'</button>
+<button type='submit' class='grid-item' name='symptom' value='sinus_pressure'>'sinus_pressure'</button>
+<button type='submit' class='grid-item' name='symptom' value='runny_nose'>'runny_nose'</button>
+<button type='submit' class='grid-item' name='symptom' value='congestion'>'congestion'</button>
+<button type='submit' class='grid-item' name='symptom' value='chest_pain'>'chest_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='weakness_in_limbs'>'weakness_in_limbs'</button>
+<button type='submit' class='grid-item' name='symptom' value='fast_heart_rate'>'fast_heart_rate'</button>
+<button type='submit' class='grid-item' name='symptom' value='pain_during_bowel_movements'>'pain_during_bowel_movements'</button>
+<button type='submit' class='grid-item' name='symptom' value='pain_in_anal_region'>'pain_in_anal_region'</button>
+<button type='submit' class='grid-item' name='symptom' value='bloody_stool'>'bloody_stool'</button>
+<button type='submit' class='grid-item' name='symptom' value='irritation_in_anus'>'irritation_in_anus'</button>
+<button type='submit' class='grid-item' name='symptom' value='neck_pain'>'neck_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='dizziness'>'dizziness'</button>
+<button type='submit' class='grid-item' name='symptom' value='cramps'>'cramps'</button>
+<button type='submit' class='grid-item' name='symptom' value='bruising'>'bruising'</button>
+<button type='submit' class='grid-item' name='symptom' value='obesity'>'obesity'</button>
+<button type='submit' class='grid-item' name='symptom' value='swollen_legs'>'swollen_legs'</button>
+<button type='submit' class='grid-item' name='symptom' value='swollen_blood_vessels'>'swollen_blood_vessels'</button>
+<button type='submit' class='grid-item' name='symptom' value='puffy_face_and_eyes'>'puffy_face_and_eyes'</button>
+<button type='submit' class='grid-item' name='symptom' value='enlarged_thyroid'>'enlarged_thyroid'</button>
+<button type='submit' class='grid-item' name='symptom' value='brittle_nails'>'brittle_nails'</button>
+<button type='submit' class='grid-item' name='symptom' value='swollen_extremeties'>'swollen_extremeties'</button>
+<button type='submit' class='grid-item' name='symptom' value='excessive_hunger'>'excessive_hunger'</button>
+<button type='submit' class='grid-item' name='symptom' value='extra_marital_contacts'>'extra_marital_contacts'</button>
+<button type='submit' class='grid-item' name='symptom' value='drying_and_tingling_lips'>'drying_and_tingling_lips'</button>
+<button type='submit' class='grid-item' name='symptom' value='slurred_speech'>'slurred_speech'</button>
+<button type='submit' class='grid-item' name='symptom' value='knee_pain'>'knee_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='hip_joint_pain'>'hip_joint_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='muscle_weakness'>'muscle_weakness'</button>
+<button type='submit' class='grid-item' name='symptom' value='stiff_neck'>'stiff_neck'</button>
+<button type='submit' class='grid-item' name='symptom' value='swelling_joints'>'swelling_joints'</button>
+<button type='submit' class='grid-item' name='symptom' value='movement_stiffness'>'movement_stiffness'</button>
+<button type='submit' class='grid-item' name='symptom' value='spinning_movements'>'spinning_movements'</button>
+<button type='submit' class='grid-item' name='symptom' value='loss_of_balance'>'loss_of_balance'</button>
+<button type='submit' class='grid-item' name='symptom' value='unsteadiness'>'unsteadiness'</button>
+<button type='submit' class='grid-item' name='symptom' value='weakness_of_one_body_side'>'weakness_of_one_body_side'</button>
+<button type='submit' class='grid-item' name='symptom' value='loss_of_smell'>'loss_of_smell'</button>
+<button type='submit' class='grid-item' name='symptom' value='bladder_discomfort'>'bladder_discomfort'</button>
+<button type='submit' class='grid-item' name='symptom' value='foul_smell_of urine'>'foul_smell_of urine'</button>
+<button type='submit' class='grid-item' name='symptom' value='continuous_feel_of_urine'>'continuous_feel_of_urine'</button>
+<button type='submit' class='grid-item' name='symptom' value='passage_of_gases'>'passage_of_gases'</button>
+<button type='submit' class='grid-item' name='symptom' value='internal_itching'>'internal_itching'</button>
+<button type='submit' class='grid-item' name='symptom' value='toxic_look_(typhos)'>'toxic_look_(typhos)'</button>
+<button type='submit' class='grid-item' name='symptom' value='depression'>'depression'</button>
+<button type='submit' class='grid-item' name='symptom' value='irritability'>'irritability'</button>
+<button type='submit' class='grid-item' name='symptom' value='muscle_pain'>'muscle_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='altered_sensorium'>'altered_sensorium'</button>
+<button type='submit' class='grid-item' name='symptom' value='red_spots_over_body'>'red_spots_over_body'</button>
+<button type='submit' class='grid-item' name='symptom' value='belly_pain'>'belly_pain'</button>
+<button type='submit' class='grid-item' name='symptom' value='abnormal_menstruation'>'abnormal_menstruation'</button>
+<button type='submit' class='grid-item' name='symptom' value='dischromic _patches'>'dischromic _patches'</button>
+<button type='submit' class='grid-item' name='symptom' value='watering_from_eyes'>'watering_from_eyes'</button>
+<button type='submit' class='grid-item' name='symptom' value='increased_appetite'>'increased_appetite'</button>
+<button type='submit' class='grid-item' name='symptom' value='polyuria'>'polyuria'</button>
+<button type='submit' class='grid-item' name='symptom' value='family_history'>'family_history'</button>
+<button type='submit' class='grid-item' name='symptom' value='mucoid_sputum'>'mucoid_sputum'</button>
+<button type='submit' class='grid-item' name='symptom' value='rusty_sputum'>'rusty_sputum'</button>
+<button type='submit' class='grid-item' name='symptom' value='lack_of_concentration'>'lack_of_concentration'</button>
+<button type='submit' class='grid-item' name='symptom' value='visual_disturbances'>'visual_disturbances'</button>
+<button type='submit' class='grid-item' name='symptom' value='receiving_blood_transfusion'>'receiving_blood_transfusion'</button>
+<button type='submit' class='grid-item' name='symptom' value='receiving_unsterile_injections'>'receiving_unsterile_injections'</button>
+<button type='submit' class='grid-item' name='symptom' value='coma'>'coma'</button>
+<button type='submit' class='grid-item' name='symptom' value='stomach_bleeding'>'stomach_bleeding'</button>
+<button type='submit' class='grid-item' name='symptom' value='distention_of_abdomen'>'distention_of_abdomen'</button>
+<button type='submit' class='grid-item' name='symptom' value='history_of_alcohol_consumption'>'history_of_alcohol_consumption'</button>
+<button type='submit' class='grid-item' name='symptom' value='fluid_overload.1'>'fluid_overload.1'</button>
+<button type='submit' class='grid-item' name='symptom' value='blood_in_sputum'>'blood_in_sputum'</button>
+<button type='submit' class='grid-item' name='symptom' value='prominent_veins_on_calf'>'prominent_veins_on_calf'</button>
+<button type='submit' class='grid-item' name='symptom' value='palpitations'>'palpitations'</button>
+<button type='submit' class='grid-item' name='symptom' value='painful_walking'>'painful_walking'</button>
+<button type='submit' class='grid-item' name='symptom' value='pus_filled_pimples'>'pus_filled_pimples'</button>
+<button type='submit' class='grid-item' name='symptom' value='blackheads'>'blackheads'</button>
+<button type='submit' class='grid-item' name='symptom' value='scurring'>'scurring'</button>
+<button type='submit' class='grid-item' name='symptom' value='skin_peeling'>'skin_peeling'</button>
+<button type='submit' class='grid-item' name='symptom' value='silver_like_dusting'>'silver_like_dusting'</button>
+<button type='submit' class='grid-item' name='symptom' value='small_dents_in_nails'>'small_dents_in_nails'</button>
+<button type='submit' class='grid-item' name='symptom' value='inflammatory_nails'>'inflammatory_nails'</button>
+<button type='submit' class='grid-item' name='symptom' value='blister'>'blister'</button>
+<button type='submit' class='grid-item' name='symptom' value='red_sore_around_nose'>'red_sore_around_nose'</button>
+<button type='submit' class='grid-item' name='symptom' value='yellow_crust_ooze'>'yellow_crust_ooze'</button>
+    </form>
+    <div class="buttons-container">
+        <button type="submit" form="symptoms-form">Submit</button>
+        <button type="button" onclick="clearSymptoms()">Clear All</button>
+    </div>
+
+    <div id="selected-symptoms"></div>
+
+    <script>
+        function clearSymptoms() {
+            const buttons = document.querySelectorAll('.grid-item');
+            buttons.forEach(button => {
+                button.classList.remove('selected');
+            });
+            document.getElementById('selected-symptoms').innerHTML = '';
+        }
+
+        const buttons = document.querySelectorAll('.grid-item');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                updateSelectedSymptoms();
+            });
+        });
+
+        function updateSelectedSymptoms() {
+            const selectedButtons = document.querySelectorAll('.grid-item.selected');
+            const selectedSymptoms = Array.from(selectedButtons).map(button => button.textContent);
+            document.getElementById('selected-symptoms').innerHTML = '<strong>Selected Symptoms:</strong> ' + selectedSymptoms.join(', ');
+        }
+    </script>
+</body>
+</html>
