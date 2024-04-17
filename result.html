@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symptom Checker - Result</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        /* Style for the predicted disease text */
+        .predicted-disease {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff; /* You can change the color to suit your design */
+            margin-bottom: 20px; /* Add some space below the text */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Symptom Checker - Report</h1>
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>Predicted Disease:</h2>
+                <!-- Apply the "predicted-disease" class to the <p> element -->
+                <p class="predicted-disease">{{ disease_prediction }}</p>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <h2>Probability:</h2>
+                <ul class="list-group">
+                    {% for label, probability in probability.items() %}
+                    <li class="list-group-item">{{ label }}: {{ probability }}%</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h2>Probability Distribution</h2>
+                <div id="plot" style="width: 100%; height: 400px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript code for Plotly.js plot
+        var labels = Object.keys({{ probability|tojson }});
+        var probabilities = Object.values({{ probability|tojson }}).map(Number);
+
+        var data = [{
+            x: labels,
+            y: probabilities,
+            type: 'bar',
+            marker: {
+                color: getRandomColor() // Get a random color for the graph
+            }
+        }];
+
+        var layout = {
+            title: 'Probability Distribution',
+            xaxis: {
+                title: 'Disease',
+                tickangle: -45
+            },
+            yaxis: {
+                title: 'Probability'
+            }
+        };
+
+        Plotly.newPlot('plot', data, layout);
+
+        // Function to generate a random color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+    </script>
+</body>
+</html>
