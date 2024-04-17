@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request
+import pandas as pd
 from sklearn.pipeline import make_pipeline
 from sklearn.impute import SimpleImputer
 import joblib
-import pandas as pd
 
-app = Flask(__name__)
+app = Flask(_name_)
 
-model = joblib.load('D:\ML Lab\Mini project\mark1\model_mk1.pkl')
+model = joblib.load('model_mk1.pkl')
 
 pipeline = make_pipeline(SimpleImputer(strategy='mean'),model)
 
@@ -32,26 +32,25 @@ X_columns = ['itching', 'skin_rash', 'nodal_skin_eruptions', 'continuous_sneezin
                 'blackheads', 'scurring', 'skin_peeling', 'silver_like_dusting', 'small_dents_in_nails', 'inflammatory_nails', 'blister', 
                 'red_sore_around_nose','yellow_crust_ooze']
 
-def predict_disease(selected_symptoms_dict):
-    new_data = pd.DataFrame([selected_symptoms_dict], columns=X_columns)
-    prediction = model.predict(new_data)[0]
-    decision_scores = model.decision_function(new_data)
-    probability_dict = {label: score for label, score in zip(model.classes_, decision_scores[0])}
-    top_5_probabilities = sorted(probability_dict.items(), key=lambda x: x[1], reverse=True)[:5]
-    formatted_probabilities = {label: f'{probability:.4f}' for label, probability in top_5_probabilities}
-
-    return prediction, formatted_probabilities
-
 @app.route('/')
-def home():
-    return render_template('index.html')
+def index():
+    return render_template('index.html', feature_names=feature_names)
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    selected_symptoms = request.form.getlist('symptoms')
-    selected_symptoms_dict = {symptom: 1 if symptom in selected_symptoms else 0 for symptom in X_columns}
-    prediction = predict_disease(selected_symptoms_dict)
-    return render_template('index.html', prediction=prediction)
+    symptoms = {symptom: int(request.form.get(symptom, 0)) for symptom in feature_names}
+    disease_prediction, probability = predict_disease_test_model(model, symptoms, feature_names)
+    return render_template('result.html', disease_prediction=disease_prediction, probability=probability)
 
-if __name__ == '__main__':
+def predict_disease_test_model(pipeline, symptoms, feature_names):
+    new_data = pd.DataFrame([symptoms], columns=feature_names)
+    prediction = pipeline.predict(new_data)
+    decision_scores = pipeline.decision_function(new_data)
+    probability_dict = {label: score for label, score in zip(pipeline.classes_, decision_scores[0])}
+    predicted_label = prediction[0]
+    top_5_probabilities = sorted(probability_dict.items(), key=lambda x: x[1], reverse=True)[:5]
+    formatted_probabilities = {label: f'{probability:.4f}' for label, probability in top_5_probabilities}
+    return predicted_label, formatted_probabilities
+
+if _name_ == '_main_':
     app.run(debug=True)
