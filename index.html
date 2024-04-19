@@ -13,12 +13,22 @@
             background-color: #007bff;
             color: #fff;
         }
+        .dropdown-menu.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="mt-5">Symptom Checker</h1>
+        <h1 class="mt-5">SymptoScan</h1>
         <form action="/predict" method="post" onsubmit="checkSelections()">
+            <div class="input-group mt-3 mb-3">
+                <input type="text" class="form-control" placeholder="Search for symptoms..." id="symptomSearchInput" oninput="showSuggestions()">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="filterSymptoms()">Search</button>
+                </div>
+                <div class="dropdown-menu" id="suggestionDropdown"></div>
+            </div>
             <h2 class="mt-4">Select Symptoms:</h2>
             <div class="symptom-buttons">
                 {% for symptom in feature_names %}
@@ -31,6 +41,7 @@
             </div>
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
             <button type="button" class="btn btn-secondary mt-3" onclick="clearAll()">Clear All</button>
+            <button type="button" class="btn btn-info mt-3" onclick="toggleSymptomButtons()">Show All Symptoms</button>
         </form>
     </div>
 
@@ -56,6 +67,63 @@
             });
             var symptomList = document.getElementById('symptom-list');
             symptomList.textContent = '';
+        }
+        function filterSymptoms() {
+            var input, filter, buttons, i;
+            input = document.getElementById("symptomSearchInput");
+            filter = input.value.toUpperCase();
+            buttons = document.querySelectorAll(".symptom-buttons button");
+            for (i = 0; i < buttons.length; i++) {
+                if (buttons[i].textContent.toUpperCase().indexOf(filter) > -1) {
+                    buttons[i].style.display = "";
+                } else {
+                    buttons[i].style.display = "none";
+                }
+            }
+        }
+        function showSuggestions() {
+            var input, filter, dropdown, suggestions, i, txtValue;
+            input = document.getElementById("symptomSearchInput");
+            filter = input.value.toUpperCase();
+            dropdown = document.getElementById("suggestionDropdown");
+            suggestions = [];
+            {% for symptom in feature_names %}
+            if ("{{ symptom }}".toUpperCase().startsWith(filter)) {
+                suggestions.push("{{ symptom }}");
+            }
+            {% endfor %}
+            dropdown.innerHTML = '';
+            if (suggestions.length > 0) {
+                for (i = 0; i < suggestions.length; i++) {
+                    var option = document.createElement("a");
+                    option.textContent = suggestions[i];
+                    option.className = "dropdown-item";
+                    option.href = "#";
+                    option.onclick = function() {
+                        toggleSelection(this.textContent);
+                        dropdown.classList.remove("show"); 
+                    };
+                    dropdown.appendChild(option);
+                }
+                dropdown.classList.add("show");
+            } else {
+                dropdown.classList.remove("show");
+            }
+        }
+        function toggleSymptomButtons() {
+            var buttons = document.querySelectorAll('.symptom-buttons button');
+            var showAllButton = document.querySelector('.btn-info');
+            if (showAllButton.textContent === "Show All Symptoms") {
+                showAllButton.textContent = "Hide All Symptoms";
+                buttons.forEach(function(button) {
+                    button.style.display = "inline-block"; 
+                });
+            } else {
+                showAllButton.textContent = "Show All Symptoms";
+                buttons.forEach(function(button) {
+                    button.style.display = "none";
+                });
+            }
         }
     </script>
 </body>
